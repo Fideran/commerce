@@ -1,0 +1,56 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h3 class="title">{{auction.auction_name}}</h3>
+    <div id="grid">
+    <div>
+            <img class="image_detail" src="{{auction.auction_image.url}}" >
+    </div>
+    <div id="bid_div">
+            <div>
+                <ul>
+                    <li class="list">
+                        <h4 class="subtitle">{{auction.auction_category}}</h4>
+                    </li>
+                    <li class= "list">
+                        <h4 class="subtitle"><strong>Bid:</strong> {{auction.auction_bid}} $</h4>  
+                        <i>{{max_user.bid_user}} is the lastest bider</i>
+                        
+                    </li>
+                </ul>    
+            </div>
+            <div>
+                <form action="{% url 'auction_detail' auction.id %}" method="POST">
+                    {% csrf_token %}
+                    <div >
+                        <input type="number" name="bids" value="0" class="form-control-sm" id="number">
+                        <input class="btn btn-outline-dark" type="submit" value="Bid"  name="bid" id="button1"> {% if warning %}<i id="warning">{{warning}}</i>{% endif %}
+                    </div>
+                </form>
+                <form action="{% url 'watch_list' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{auction.id}}" name="adds">
+                    <input class="btn btn-outline-dark" type="submit" value="ADD TO MY LIST" name="add" id="button2" >
+                </form>
+            </div>
+    </div>
+    </div>
+    <div id = "comment_div">
+        <div class="comment">
+            <form action="{% url 'comment' auction.id%}" method="POST">
+                {% csrf_token %}
+                <textarea placeholder="Add Your Comment Here" name="comment" id="textarea" cols="30" rows="1"></textarea>
+                <div>
+                    <input type="submit" value="Comment">
+    
+                </div>
+            </form>
+        </div>
+        <div id="comment_list">
+            {% for comment in comments %}
+                <li  class="list" ><b id="comment_user">{{comment.user}}: </b>{{comment.comment}}</li>
+            {% endfor %}
+        </div>
+    
+    </div>
+{% endblock %}

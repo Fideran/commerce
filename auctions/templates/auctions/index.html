@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h3 class="title">Active Listings</h3>
+    
+    <ul>
+        <div class="container">
+        {% for auction in auctions %}
+    
+        <div>
+            <a href="{% url 'auction_detail' auction.id %}">
+                
+                <img src="{{auction.auction_image.url}}" height="200px" class="image">
+                <li class="list" id="auction">{{auction.auction_name}}</li>
+                <i class="italic">Posted by {{auction.auction_user}}</i>
+                <div class="bid">${{auction.auction_bid}}</div>
+                <div style="text-align: right;"><i id="time" class="list" >{{auction.post_time}}</i>
+                </div>
+                
+                
+            </a>
+        
+        </div>
+            {% endfor %}
+        </div>
+    </ul>
+
+    
+{% endblock %}

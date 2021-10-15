@@ -1,0 +1,35 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <ol>
+        {% for category in categories %}
+        <h3 class="title" style="padding: 10px;">{{category}}</h3>
+            <li class="list">
+                
+                <ul>
+                <div class="container">
+                    
+                    {% for auction in auctions %}
+                        {% if auction.auction_category == category %}
+                        <Div >
+                            <a href="{% url 'auction_detail' auction.id %}">
+                        
+                                <img  src="{{auction.auction_image.url}}" class="image"   >
+                                <li class="list">
+                                    {{auction.auction_name}}
+                                </li>
+                                <i class="italic">posted by {{auction.auction_user}}</i> 
+                                <div class="bid">${{auction.auction_bid}}</div>
+                            </a>
+                        </Div>
+                        {% endif %}
+                    {% endfor %}
+                    
+                </div>
+                </ul>
+            </li>
+            <hr>
+        {% endfor %}
+        
+    </ol>
+{% endblock %}

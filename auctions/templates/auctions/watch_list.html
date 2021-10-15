@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <ul>
+        <form action="{% url 'delete'%}" method="POST" >
+            {% csrf_token %}
+            {% for list in lists %} 
+                {% for auction in auctions %}
+                    {% if list.auction_list == auction %}
+            <div id="watch_list">
+                <a href="{% url 'auction_detail' auction.id %} ">
+                    <li class="list">
+                        <input type="checkbox" name="selection"  value="{{list.id}}">
+                        <b id="list_in_watch_list">{{list}}</b>
+                    </li>
+                </a> 
+                </div>
+                    {% endif %}
+            {% empty %}
+                     
+            <li class="list">No list</li>
+                {% endfor %}
+            {% endfor %}
+            <input type="submit" value="Delete" class="delete">
+        </form>
+    
+    </ul>
+    
+{% endblock %}
